@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class HandDebugConsole: MonoBehaviour
     [SerializeField] private OVRHand _lHand;
     [SerializeField] private OVRSkeleton _rSkelton;
     [SerializeField] private OVRSkeleton _lSkelton;
+    [SerializeField] private TMP_Text _tmpText;
 
     void Start()
     {
@@ -38,12 +40,19 @@ public class HandDebugConsole: MonoBehaviour
 
         var handGesture = new OVRHandGestureIdentifier();
         this.UpdateAsObservable()
+            .Where(_=>_tmpText != null)
             .Subscribe(_ =>
             {
-                console.AddMessage("HandGesture", Color.white);
-                console.AddMessage($"<R> Thumb: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Thumb):F2} Index: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Index):F2} Middle: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Middle):F2} Ring: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Ring):F2} Pinky: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Pinky):F2}", Color.white);
-                console.AddMessage("\n", Color.red);
-                console.AddMessage($"<L> Thumb: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Thumb):F2} Index: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Index):F2} Middle: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Middle):F2} Ring: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Ring):F2} Pinky: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Pinky):F2}", Color.white);
+                //Debug.Log("HandGesture");
+                //Debug.Log($"<R> Thumb: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Thumb):F2} Index: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Index):F2} Middle: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Middle):F2} Ring: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Ring):F2} Pinky: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Pinky):F2}");
+                //Debug.Log("\n");
+                //Debug.Log($"<L> Thumb: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Thumb):F2} Index: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Index):F2} Middle: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Middle):F2} Ring: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Ring):F2} Pinky: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Pinky):F2}");
+                _tmpText.text = "";
+                _tmpText.text += "HandGestureObserver";
+                _tmpText.text += "\n";
+                _tmpText.text += $"<R> Thumb: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Thumb):F2} Index: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Index):F2} Middle: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Middle):F2} Ring: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Ring):F2} Pinky: {handGesture.GetConditionBendFinger(_rSkelton, OVRPlugin.HandFinger.Pinky):F2}";
+                _tmpText.text += "\n";
+                _tmpText.text += $"<L> Thumb: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Thumb):F2} Index: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Index):F2} Middle: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Middle):F2} Ring: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Ring):F2} Pinky: {handGesture.GetConditionBendFinger(_lSkelton, OVRPlugin.HandFinger.Pinky):F2}";
             });
 
     }
