@@ -87,7 +87,15 @@ public class OVRHandGestureIdentifier
         return dot;
     }
 
-    bool IsStraight(OVRSkeleton skeleton, OVRPlugin.HandFinger fingerType, float threshold)
+    public bool IsStraightFinger(OVRSkeleton skeleton, OVRPlugin.HandFinger fingerType)
+    {
+        //var threshold = fingerType == OVRPlugin.HandFinger.Thumb ? .94f : .96f;
+        var threshold = .95f;
+        
+        return GetConditionBendFinger(skeleton, fingerType) >= threshold;
+    }
+    
+    public bool IsStraightFinger(OVRSkeleton skeleton, OVRPlugin.HandFinger fingerType, float threshold)
     {
         return GetConditionBendFinger(skeleton, fingerType) >= threshold;
     }
