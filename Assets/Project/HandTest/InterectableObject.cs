@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UniRx;
@@ -16,6 +17,7 @@ public class InterectableObject : MonoBehaviour
 
         OnTriggerEnterFinger
             .Do(_ => print("Touch"))
+            .ThrottleFirst(TimeSpan.FromSeconds(5))
             .Subscribe(_ =>
             {
                 var gpup = Instantiate(_gpupCircle, this.transform.position, Quaternion.identity, transform);

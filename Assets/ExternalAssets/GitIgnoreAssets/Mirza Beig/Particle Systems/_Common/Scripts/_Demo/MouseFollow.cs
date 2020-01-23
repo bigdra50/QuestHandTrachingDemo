@@ -36,6 +36,7 @@ namespace MirzaBeig
 
                 // ...
 
+                [SerializeField] private OVRSkeleton _Skeleton;
                 public float speed = 8.0f;
                 public float distanceFromCamera = 5.0f;
 
@@ -66,7 +67,8 @@ namespace MirzaBeig
                     Vector3 mousePosition = Input.mousePosition;
                     mousePosition.z = distanceFromCamera;
 
-                    Vector3 mouseScreenToWorld = Camera.main.ScreenToWorldPoint(mousePosition);
+                    //Vector3 mouseScreenToWorld = Camera.main.ScreenToWorldPoint(mousePosition);
+                    var mouseScreenToWorld = _Skeleton.Bones[(int) OVRSkeleton.BoneId.Hand_IndexTip].Transform.position;
 
                     float deltaTime = !ignoreTimeScale ? Time.deltaTime : Time.unscaledDeltaTime;
                     Vector3 position = Vector3.Lerp(transform.position, mouseScreenToWorld, 1.0f - Mathf.Exp(-speed * deltaTime));
